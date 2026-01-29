@@ -6,25 +6,23 @@
 ## 🚀 Project Overview
 This project implements an intelligent home security system using the **ARM Cortex-M4 (STM32F446)** architecture. Developed entirely in **C** via **Keil uVision**, the system manages environmental safety and visitor access by interfacing multiple sensors with high-efficiency register-level control.
 
+---
 
+## 📂 Project Structure
+To make it easier for you to navigate, this repository is divided into 4 main categories:
+
+* **📁 [Firmware_Code](./Firmware_Code)**: Contains all C source files (`main.c`), header files, and Keil uVision project files.
+* **📁 [Project_Documentation](./Project_Documentation)**: Full report, objectives, and detailed explanation of the Smart Security Door system.
+* **📁 [Flowcharts](./Flowcharts)**: Visual logic representation of the system (Priority sensing and EXTI logic).
+* **📁 [Circuit_Diagrams](./Circuit_Diagrams)**: Hardware schematics designed using KiCad 9.0, including pin assignments.
 
 ---
 
 ## ✨ Key Engineering Features
-
-* **🔥 Critical Priority Logic** – The system treats the **MQ-2 Smoke Sensor** as the highest priority input. Upon detection, it overrides all other processes to activate a continuous emergency alarm and visual "F1" (Fire) alert.
-* **⚡ Hardware Interrupt (EXTI) Integration** – The calling bell (SW4) is tied to an **External Interrupt (EXTI1)** on Port B. This ensures an instantaneous buzzer response, providing seamless user interaction without polling lag.
-* **👤 Motion-Activated Greeting** – Integrated **FC-51 IR Sensor** logic to detect human presence. The system transitions from Idle to a greeting state, displaying "H1" (Hi) on the Seven-Segment display.
-* **🛠️ Bare-Metal Optimization** – All GPIO configurations, clock gating (RCC), and interrupt vectors are handled via **direct register access**, ensuring minimal memory footprint and ultra-fast hardware response.
-
----
-
-## 🛠️ Hardware Specifications
-* **MCU:** STM32F446 (Otak Kecil Development Board)
-* **Sensing:** MQ-2 Gas/Smoke Sensor, FC-51 Infrared Obstacle Sensor
-* **Visual Output:** Dual 7-Segment Display, 4x System LEDs
-* **Audio Output:** Active Piezo Buzzer
-* **Design Tools:** KiCad 9.0 (Schematic), Keil uVision 5 (Firmware)
+* **🔥 Critical Priority Logic** – The MQ-2 Smoke Sensor is set as the highest priority; detection triggers an immediate emergency "F1" alert.
+* **⚡ Hardware Interrupt (EXTI)** – The calling bell (SW4) is tied to **EXTI1**, ensuring an instantaneous buzzer response without polling lag.
+* **👤 Motion-Activated Greeting** – Integrated **FC-51 IR Sensor** logic to detect human presence and display "H1" (Hi) greeting.
+* **🛠️ Bare-Metal Optimization** – Direct register access for GPIO and RCC configuration to ensure ultra-fast hardware response.
 
 ---
 
@@ -35,32 +33,13 @@ This project implements an intelligent home security system using the **ARM Cort
 | **Smoke Detected** | 🔴 1 (Critical) | **F1** | Continuous | All Active |
 | **Motion Detected** | 🟡 2 (Standard) | **H1** | OFF | All Active |
 | **Bell Triggered** | ⚡ Async | - | Pulsed (EXTI) | No Change |
-| **Idle State** | ⚪ 3 (Passive) | (Blank) | Silent | All Inactive |
 
 ---
-
-## 🏗️ Firmware Architecture
-The firmware is structured into modular subroutines to enhance maintainability:
-* `system_init()`: Configures AHB1 bus clocks and GPIO modes.
-* `EXTI1_IRQHandler()`: Handles the asynchronous calling bell trigger.
-* `display_F1()` / `display_H1()`: Encapsulated logic for 7-Segment visualization.
-
----
-
-## 🎯 Why This Project?
-* **Industrial Standard**: Utilizes the **STM32F4** series, an industry-leading ARM Cortex-M4 MCU used in professional robotics and automation.
-* **Event-Driven Excellence**: Demonstrates advanced **Interrupt Handling** instead of basic polling, a critical skill for real-time embedded systems.
-* **Atomic Control**: Showcases the ability to manipulate hardware at the register level for maximum efficiency.
 
 ## 🚀 Potential Upgrades
-* **📱 IoT Connectivity**: Integrating an **ESP8266** module to send emergency Wi-Fi alerts to mobile devices.
-* **🔒 Biometric Access**: Adding a fingerprint or keypad module for enhanced door security.
-* **💾 Blackbox Logging**: Utilizing internal **EEPROM** or an SD Card to log security events and timestamps.
-
-## 💡 Ideal For
-* **Engineering Students** studying ARM Cortex-M4 architecture and peripheral interfacing.
-* **Embedded Developers** interested in low-level register-based programming.
-* **Makers** building robust, high-speed home security prototypes.
+* **📱 IoT Connectivity**: Integration with ESP8266 for real-time mobile notifications.
+* **🔒 Biometric Access**: Adding fingerprint or keypad modules for secondary authentication.
+* **💾 Data Logging**: Utilizing EEPROM to log security event timestamps.
 
 ---
 
