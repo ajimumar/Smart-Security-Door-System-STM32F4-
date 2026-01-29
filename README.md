@@ -1,51 +1,55 @@
-# 🛡️ Smart Security Door System (STM32F4)
-> **An Advanced Embedded Security Solution featuring Priority-Sensing, Hardware Interrupts, and Bare-Metal Optimization.**
+# 🛡️ SecurityDoor-STM32: Intelligent Priority-Based Security System
 
----
+**SecurityDoor-STM32** is a high-performance embedded monitoring system built on the **STM32F446RET (Otak Kecil Board)**. It features real-time smoke detection, human presence sensing, and an interrupt-driven visitor alert system—all managed through optimized bare-metal register logic.
 
-## 🚀 Project Overview
-This project implements an intelligent home security system using the **ARM Cortex-M4 (STM32F446)** architecture. Developed entirely in **C** via **Keil uVision**, the system manages environmental safety and visitor access by interfacing multiple sensors with high-efficiency register-level control.
 
----
 
-## 📂 Project Structure
-To make it easier for you to navigate, this repository is divided into 4 main categories:
+## ✨ Key Features
 
-* **📁 [Firmware_Code](./Firmware_Code)**: Contains all C source files (`main.c`), header files, and Keil uVision project files.
-* **📁 [Project_Documentation](./Project_Documentation)**: Full report, objectives, and detailed explanation of the Smart Security Door system.
-* **📁 [Flowcharts](./Flowcharts)**: Visual logic representation of the system (Priority sensing and EXTI logic).
-* **📁 [Circuit_Diagrams](./Circuit_Diagrams)**: Hardware schematics designed using KiCad 9.0, including pin assignments.
+* **Dual-Sensor Fusion** – Seamlessly integrates an **MQ-2 Smoke Sensor** and **FC-51 IR Sensor** with hardware-level noise filtering.
+* **Emergency Fire Override** – Automated system-wide priority that triggers a continuous siren and "F1" (Fire) visual alert upon smoke detection.
+* **Smart Greeting Logic** – Intelligent motion tracking that activates 4x LED indicators and displays a "H1" (Hi) greeting on a Seven-Segment display.
+* **Zero-Latency Interrupt Bell** – Uses **EXTI1** hardware interrupts to provide an instantaneous calling bell response, bypassing main loop execution.
+* **Optimized Visual Feedback** – High-speed display control via **Seven-Segment Multiplexing**, ensuring flicker-free status updates.
+* **Bare-Metal Performance** – Utilizes **BSRR** and **IDR** registers for atomic hardware manipulation, achieving ultra-fast execution speeds.
 
----
+## 🛠️ How It Works
 
-## ✨ Key Engineering Features
-* **🔥 Critical Priority Logic** – The MQ-2 Smoke Sensor is set as the highest priority; detection triggers an immediate emergency "F1" alert.
-* **⚡ Hardware Interrupt (EXTI)** – The calling bell (SW4) is tied to **EXTI1**, ensuring an instantaneous buzzer response without polling lag.
-* **👤 Motion-Activated Greeting** – Integrated **FC-51 IR Sensor** logic to detect human presence and display "H1" (Hi) greeting.
-* **🛠️ Bare-Metal Optimization** – Direct register access for GPIO and RCC configuration to ensure ultra-fast hardware response.
+* **Sensing Stage** – The STM32 polls the environment at the microsecond level. The system uses digital signal processing to verify inputs from the MQ-2 and FC-51 sensors to prevent false triggers.
+* **Logic Processing** – Features a **Priority-Based Task Scheduler**. If smoke is detected, the system immediately suspends standard monitoring and enters **Emergency Mode**.
+* **Actuation Stage** – It updates the **Dual 14-pin Seven-Segment Display** with HEX codes ("F1", "H1") and triggers high-decibel audible alerts via the active buzzer.
+* **Interrupt Handling** – Pressing the **SW4 button** triggers an asynchronous hardware interrupt, instantly toggling the buzzer state without stalling the CPU's main monitoring tasks.
 
----
 
-## 📊 System Logic & Priority Table
 
-| Condition | System Priority | Display Code | Buzzer State | LED Status |
+## 📊 Logic & Feedback Table
+
+| Input Condition | LED (PB12-15) | 7-Seg Display | Buzzer (PD2) | Logic Priority |
 | :--- | :---: | :---: | :---: | :---: |
-| **Smoke Detected** | 🔴 1 (Critical) | **F1** | Continuous | All Active |
-| **Motion Detected** | 🟡 2 (Standard) | **H1** | OFF | All Active |
-| **Bell Triggered** | ⚡ Async | - | Pulsed (EXTI) | No Change |
-
----
+| **🔥 Smoke Detected** | 🔴 ALL ON | **F1** | 🔊 Continuous | 🏆 1 (Highest) |
+| **👤 Motion Detected** | 🔴 ALL ON | **H1** | 🔇 Silent | ⭐ 2 (Standard) |
+| **🔔 Bell Pressed** | (No Change) | (No Change) | 🔊 Pulsed | ⚡ EXTI (Async) |
+| **⚪ Idle Mode** | 🌑 ALL OFF | (Blank) | 🔇 Silent | 💤 3 (Lowest) |
 
 ## 🚀 Potential Upgrades
-* **📱 IoT Connectivity**: Integration with ESP8266 for real-time mobile notifications.
-* **🔒 Biometric Access**: Adding fingerprint or keypad modules for secondary authentication.
-* **💾 Data Logging**: Utilizing EEPROM to log security event timestamps.
+
+* **IoT Gateway Integration** – Interfacing an **ESP8266** module to broadcast fire alerts to a cloud-based dashboard via MQTT protocol.
+* **Solenoid Actuator Control** – Adding a 12V relay system to automatically engage/disengage electromagnetic door locks.
+* **Deep Sleep Optimization** – Implementing **Low Power Modes** (Sleep/Stop) to enhance battery life while maintaining interrupt wake-up capability.
+* **Analog Sensitivity Tuning** – Utilizing the **STM32 ADC (Analog-to-Digital Converter)** to calibrate smoke sensor threshold levels dynamically.
+
+## 🎯 Why This Project?
+
+* **Industrial Grade MCU** – Developed on the **ARM Cortex-M4**, a powerhouse chip used in automotive and industrial automation.
+* **Interrupt-Driven Architecture** – Demonstrates a deep understanding of asynchronous event handling, a must-have for real-time systems.
+* **Register-Level Programming** – Moves beyond HAL libraries to interact directly with hardware for maximum efficiency and control.
+
+## 💡 Ideal For
+
+* **Engineering Students** mastering ARM architecture and safety-critical system design.
+* **Embedded System Designers** looking for fast, priority-based sensing prototypes.
+* **STM32 Enthusiasts** exploring GPIO registers, EXTI handlers, and Seven-Segment multiplexing.
 
 ---
-
-## 👥 Development Team
-* **Azim Umar** | **Amir Asyraf** | **Melvin Jude** | **Tan Zi Long**
-
----
-*Submitted to: Ir. Ts. Dr. Fauzan Khairi bin Che Harun*
-*Bachelor of Electronic Engineering | Universiti Teknologi Malaysia*
+*Developed by: Azim Umar, Amir Asyraf, Melvin Jude, Tan Zi Long*
+*Supervised by: Ir. Ts. Dr. Fauzan Khairi bin Che Harun*
