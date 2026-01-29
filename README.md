@@ -1,5 +1,3 @@
-# Smart-Security-Door-System-STM32F4-
-This project is a microcontroller-based security system developed in C language using Keil uVision for the STM32F4 (Otak Kecil board). The system is designed to provide real-time monitoring and automated alerts for home security.
 # 🛡️ Smart Security Door System (STM32F4)
 > **Advanced Home Security using STM32F446 (Otak Kecil), MQ-2, and FC-51 Sensors.**
 
@@ -8,8 +6,7 @@ This project is a microcontroller-based security system developed in C language 
 ## 🚀 Overview
 A high-performance security solution developed in **C Language** that integrates real-time environmental sensing and human detection. This system prioritizes fire safety and visitor alerts using **External Interrupts (EXTI)** for instantaneous response.
 
-![Project Header](https://via.placeholder.com/1000x400?text=SMART+SECURITY+DOOR+-+STM32F4+PROJECT+HEADER) 
-*(Tips: Guna gambar litar atau mockup projek kau kat sini)*
+
 
 ---
 
@@ -30,6 +27,8 @@ A high-performance security solution developed in **C Language** that integrates
     * **Priority 1 (Fire):** Smoke detected? → Trigger **Continuous Buzzer** + Display **"F1"**.
     * **Priority 2 (Visitor):** Motion detected? → Turn on **LEDs** + Display **"H1"**.
 3.  **Interrupt Stage:** When SW4 (PB1) is pressed, the hardware triggers a callback to `EXTI1_IRQHandler`, sounding the buzzer immediately.
+
+
 
 ---
 
@@ -60,10 +59,5 @@ A high-performance security solution developed in **C Language** that integrates
 ---
 
 ## 👥 Meet The Team
-* **Azim Umar** - *System Architecture*
-* **Amir Asyraf** - *Firmware Development*
-* **Melvin Jude** - *Hardware Integration*
-* **Tan Zi Long** - *Documentation & Testing*
-
----
+* **Azim Umar** * **Amir Asyraf** * **Melvin Jude** * **Tan Zi Long** ---
 *Submitted to: Ir. Ts. Dr. Fauzan Khairi bin Che Harun*
